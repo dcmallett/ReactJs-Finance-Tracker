@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import styles from './Signup.module.css';
-
+import { useSignup } from '../../Hooks/useSignup';
 
 const Signup = (props) => {
 
@@ -8,10 +8,12 @@ const Signup = (props) => {
     const [password, setPassword] = useState('');
     const [displayName, setDisplayName] = useState('');
 
+    //initalizing the hook
+    const { signup, isPending, error } = useSignup(); 
 
     const submitFormHandler = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        signup(email, password, displayName);
     }
 
     return (
@@ -41,7 +43,11 @@ const Signup = (props) => {
                     value={displayName}
                     />
                 </label>
-                <button className='btn'>Signup</button>
+                {!isPending &&<button className='btn'>Signup</button>}
+                    {/*while is pending is true we want to disable the button */}
+                {isPending && <button className='btn' disabled>Please wait</button>}
+
+                {error && <p>{error}</p>}
             </form>
         </Fragment>
     )
