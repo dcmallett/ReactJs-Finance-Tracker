@@ -10,6 +10,8 @@ export const authReducer = (state, action) => {
             //when the case matches 'login' we want to return a new state obj
             //we take the current state and spread it.
             return { ...state, user: action.payload}
+        case 'LOGOUT':
+            return { ...state, user: null }
         default:
             return state;
     }
