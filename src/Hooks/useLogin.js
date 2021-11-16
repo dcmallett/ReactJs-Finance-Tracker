@@ -18,11 +18,9 @@ export const useLogin = () => {
             //login
             const res = await projectAuth.signInWithEmailAndPassword(email, password);
 
-            if (!res) {
-                throw new Error('Sorry login failed please try again');
-            }
-
             //dispatch login action
+            //when we sign in we get a response. on the response we get a user obj
+            //the payload for the dispatch is the user.
             dispatch({ type: 'LOGIN', payload: res.user})
 
 
@@ -48,7 +46,7 @@ export const useLogin = () => {
         setIsCancelled(true);
     }, [])
 
-    return { login, isPending, error}
+    return { login, isPending, error }
 
 }
 

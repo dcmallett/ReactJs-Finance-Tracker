@@ -1,10 +1,13 @@
 import { Fragment, useState } from 'react';
 import styles from './Login.module.css';
+import { useLogin } from '../../Hooks/useLogin';
 
 const Login = (props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const { login, error, isPending } = useLogin();
 
     const submitLoginFormHandler = (e) => {
         e.preventDefault();
@@ -31,7 +34,9 @@ const Login = (props) => {
                         value={password} 
                     />
                 </label>
-                <button className="btn">Login</button>
+                {!isPending && <button className="btn">Login</button>}
+                {isPending && <button className='btn' disabled>Please wait...</button>}
+                {error && <p>{error}</p>}
             </form>
         </Fragment>
     )
