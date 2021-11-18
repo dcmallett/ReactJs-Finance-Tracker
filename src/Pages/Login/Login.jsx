@@ -11,7 +11,7 @@ const Login = (props) => {
 
     const submitLoginFormHandler = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        login(email, password);
     }
 
     return (
@@ -27,16 +27,16 @@ const Login = (props) => {
                     />
                 </label>
                 <label>
-                    <span>Password</span>
+                    <span>Password:</span>
                     <input 
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password} 
                     />
                 </label>
-                {!isPending && <button className="btn">Login</button>}
-                {isPending && <button className='btn' disabled>Please wait...</button>}
-                {error && <p>{error}</p>}
+                { !isPending && <button className="btn">Login</button> }
+                { isPending && <button className='btn' disabled>Please wait...</button> }
+                { error && <p>{error}</p> }
             </form>
         </Fragment>
     )
