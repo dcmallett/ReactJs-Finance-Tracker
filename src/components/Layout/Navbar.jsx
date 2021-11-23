@@ -1,11 +1,12 @@
 //package imports
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../../Hooks/useLogout';
 import { useAuthContext } from '../../Hooks/useAuthContext';
 
 //file imports
 import styles from './Navbar.module.css';
-import { Fragment } from 'react';
+
 
 
 const Navbar = (props) => {
