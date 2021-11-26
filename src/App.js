@@ -6,7 +6,6 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import Navbar from './components/Layout/Navbar';
-import { useEffect } from 'react';
 
 const App = () => {
   
@@ -20,15 +19,14 @@ const App = () => {
         <BrowserRouter>
           <Navbar />
             <Routes>
-              <Route path="/" element={!user && <Navigate to="/login" />} />
-              <Route path="/" element={user && <Home />} />
-              <Route 
-                path="/login"
-                element={<Login />} />
+              {!user && <Route path="/" element={<Navigate to="/login" />} /> }
+              {user && <Route path="/" element={<Home />} /> }
 
-              <Route
-                path="/signup"
-                element={<Signup />} />
+              {user && <Route path="/login" element={<Navigate to="/"/>} />}
+              {!user && <Route path="/login" element={<Login />} /> }
+
+              {user && <Route path="/signup" element={<Navigate to="/" />} /> }
+              {!user && <Route path="/signup" element={<Signup />} /> }
             </Routes>
         </BrowserRouter>
       )}
