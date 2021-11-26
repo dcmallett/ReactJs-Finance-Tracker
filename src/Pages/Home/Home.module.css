@@ -1,5 +1,10 @@
 .container {
     display: grid;
+    /*
+        2 fractions which means the content on the left i.e the transaction list
+        takes up 2 fractions of width 66%
+        and the side bar i.e the actual form takes up 1 fraction. 33% 
+    */
     grid-template-columns: 2fr 1fr;
     max-width: 960px;
     margin: 60px auto;
