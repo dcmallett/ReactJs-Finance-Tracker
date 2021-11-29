@@ -20,10 +20,13 @@ const firestoreReducer = (state, action) => {
 }
 
 export const useFirestore = (collection) => {
+    //useReducer response will represent the response we get back from firestore
     const [response, dispatch] = useReducer(firestoreReducer, initialState);
     const [isCancelled, setIsCancelled] = useState(false);
 
     //collection ref
+    //accepting the collection we want to work with. we use collection 
+    //so we can make the hook more reusable.
     const ref = projectFirestore.collection(collection);
 
     //add a document
