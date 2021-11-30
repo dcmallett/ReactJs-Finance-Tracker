@@ -1,16 +1,27 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
+import { useFirestore } from '../../Hooks/useFirestore';
 
-
-const TransactionForm = (props) => {
+const TransactionForm = ({ uid }) => {
     
     const [transactionName, setTransactionName] = useState('');
     const [transactionAmount, setTransactionAmount] = useState('');
+    //transactions will be made for us by firestore
+    const { addDocument, response } = useFirestore('transactions');
 
     const submitTransactionFormHandler = (e) => {
         e.preventDefault();
-        console.log(transactionName, transactionAmount);
+        addDocument({uid, transactionName, transactionAmount});
+        console.log('logged');
     }
     
+    useEffect(() => {
+        if (response.success) {
+            setTransactionName('');
+            setTransactionAmount('');
+        }
+    }, [response.success])
+
+
     return (
         <Fragment>
             <h3>Add Transaction</h3>
