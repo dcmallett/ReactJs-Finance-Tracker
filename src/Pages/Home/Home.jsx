@@ -8,7 +8,12 @@ const Home = (props) => {
 
     const { user } = useAuthContext();
     //pass in the transaction we want to connect to
-    const { documents, error} = useCollection('transactions');
+    const { documents, error} = useCollection(
+        'transactions',
+        //this is part of a query in our collection that will check if the uid matches the users uid
+        ["uid", "==", user.uid],
+        ["createdAt", "desc"]
+    );
 
     return (
         <div className={styles.container}>

@@ -1,17 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { projectFirestore } from '../firebase/config';
 
 
-export const useCollection = (collection) => {
+export const useCollection = (collection, _query, _orderBy) => {
     //this will be used to store the documents we retrieve from the collection
     //i.e the transactions
     const [documents, setDocuments] = useState(null);
     const [error, setError] = useState(null);
 
+    // If we don't use a ref --> than an infinite loop in useEffect will happen
+    // _query is an array and is different on every function call.
+    const query = useRef(_query).current
+    const orderBy = useRef(_orderBy).current
+
     useEffect(() => {
         //pass in collection we want to listen to
         //let = becuase we might update this reference in the future
+
         let ref = projectFirestore.collection(collection);
+
+        if (query) {
+            ref = ref.where(...query)
+        }
+
+        if (orderBy) {
+            //orderBy takes 2 args the propertyName and ascending or desc
+            ref = ref.orderBy(...orderBy)
+        }
 
         //fire a function for us everytime we get a snapshot back from the collection
         //we get a first snapshot.
@@ -39,7 +54,7 @@ export const useCollection = (collection) => {
         return () => unsubscribe()
 
 
-    }, [collection])
+    }, [collection, query, orderBy])
 
     return { documents, error }
 }
